@@ -1,0 +1,91 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="hive_to_kafka">
+   <global>
+        <job-tracker>${jobTracker}</job-tracker>
+        <name-node>${nameNode}</name-node>
+        <configuration>
+            <property>
+                <name>mapred.job.queue.name</name>
+                <value>${wf:conf('yarn.queue.name')}</value>
+            </property>
+            <property>
+                <name>oozie.action.max.output.data</name>
+                <value>25000</value>
+                <description>
+                    Max size of Oozie Java Action output buffer
+                </description>
+            </property>
+            <property>
+                <name>oozie.launcher.mapred.job.queue.name</name>
+                <value>${firstNotNull(wf:conf('launcherQueueName'), wf:conf('yarn.queue.name'))}</value>
+            </property>
+        </configuration>
+   </global>
+
+    <start to="hive_to_kafka"/>
+
+    <action name="hive_to_kafka">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <exec>runner.sh</exec>
+
+            <env-var>USER_NAME=${wf:conf('user.name')}</env-var>
+            <env-var>YARN_QUEUE=${wf:conf('yarn.queue.name')}</env-var>
+            <env-var>MEMORY_EXECUTOR=${wf:conf('memory.executor')}</env-var>
+            <env-var>NUMBER_EXECUTOR=${wf:conf('number.executor')}</env-var>
+            <env-var>CORES_EXECUTOR=${wf:conf('cores.executor')}</env-var>
+            <env-var>LOGSTASH_URL=${wf:conf('logstash_url')}</env-var>
+            <env-var>APP_ID=${wf:conf('app_id')}</env-var>
+            <env-var>KAFKA_BOOTSTRAP_SERVERS=${wf:conf('kafka_bootstrap_servers')}</env-var>
+            <env-var>KAFKA_SECURITY_PROTOCOL=${wf:conf('kafka_security_protocol')}</env-var>
+            <env-var>N_PARTITION=${wf:conf('n_partition')}</env-var>
+            <env-var>PATH_TO_PROJ_HDFS=${wf:conf('path_to_proj_hdfs')}</env-var>
+            <env-var>CTL_URL=${ctl_url}</env-var>
+            <env-var>CTL_ENTITY_ID=${ctl_entity_id}</env-var>
+            <env-var>LOADING_ID=${wf:conf('loading_id')}</env-var>
+            <env-var>INCREMENT_MODE=${wf:conf('increment_mode')}</env-var>
+            <env-var>POINT_DATE_MODE=${wf:conf('point_date_mode')}</env-var>
+            <env-var>SYNTHETIC_MODE=${wf:conf('synthetic_mode')}</env-var>
+            <env-var>ARCHIVE_MODE=${wf:conf('archive_mode')}</env-var>
+            <env-var>TOPIC_NAME=${wf:conf('topic_name')}</env-var>
+            <env-var>REALM=${wf:conf('realm')}</env-var>
+            <env-var>JSON_SCHEMA_FILE_NAME=${wf:conf('json_schema_file_name')}</env-var>
+            <env-var>KEYSTORE_JKS_FILE_NAME=${wf:conf('keystore_jks_file_name')}</env-var>
+            <env-var>SPARK_SQL_KAFKA_FILE_NAME=${wf:conf('spark_sql_kafka_file_name')}</env-var>
+            <env-var>KAFKA_CLIENT_FILE_NAME=${wf:conf('kafka_client_file_name')}</env-var>
+            <env-var>KAFKA_BATCH_SIZE=${wf:conf('kafka_batch_size')}</env-var>
+            <env-var>KAFKA_BUFFER_MEMORY=${wf:conf('kafka_buffer_memory')}</env-var>
+            <env-var>KAFKA_LINGER_MS=${wf:conf('kafka_linger_ms')}</env-var>
+            <env-var>KAFKA_COMPRESSION_TYPE=${wf:conf('kafka_compression_type')}</env-var>
+            <env-var>KAFKA_ACKS=${wf:conf('kafka_acks')}</env-var>
+            <env-var>KAFKA_CLIENT_ID=${wf:conf('kafka_client_id')}</env-var>
+            <env-var>PATH_TO_LOG_IN_HDFS=${wf:conf('path_to_log_in_hdfs')}</env-var>
+            <env-var>PATH_TO_PYTHON=${wf:conf('path_to_python')}</env-var>
+            <env-var>HADOOP_CONF_DIR=${wf:conf('hadoop_conf_dir')}</env-var>
+            <env-var>SPARK_MAJOR_VERSION=${wf:conf('spark_major_version')}</env-var>
+
+            <file>${path_to_proj_hdfs}/oozie/runner.sh</file>
+        </shell>
+
+        <ok to="End"/>
+        <error to="abort_wf"/>
+    </action>
+
+    <action name="abort_wf">
+        <shell xmlns="uri:oozie:shell-action:0.3">
+            <exec>killer.sh</exec>
+
+            <env-var>CTL_URL=${ctl_url}</env-var>
+            <env-var>LOADING_ID=${wf:conf('loading_id')}</env-var>
+
+            <file>${path_to_proj_hdfs}/oozie/killer.sh</file>
+        </shell>
+
+        <ok to="Kill_Error"/>
+        <error to="Kill_Error"/>
+    </action>
+
+    <kill name="Kill_Error">
+        <message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="End"/>
+</workflow-app>

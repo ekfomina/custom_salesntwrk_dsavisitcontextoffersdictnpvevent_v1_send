@@ -1,0 +1,253 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/object1628143962.json",
+    "title": "Root",
+    "type": "object",
+    "required": [
+        "header",
+        "body"
+    ],
+    "properties": {
+        "header": {
+            "$id": "#root/header",
+            "title": "Header",
+            "type": "object",
+            "required": [
+                "evtType",
+                "evtVersion",
+                "srcModule",
+                "evtId",
+                "evtDate",
+                "sndDate",
+                "parentId",
+                "prevEvtId"
+            ],
+            "properties": {
+                "evtType": {
+                    "$id": "#root/header/evtType",
+                    "title": "Evttype",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "RgGyuyYS"
+                    ],
+                    "pattern": "^.*$"
+                },
+                "evtVersion": {
+                    "$id": "#root/header/evtVersion",
+                    "title": "Evtversion",
+                    "type": "integer",
+                    "examples": [
+                        0
+                    ],
+                    "default": 0
+                },
+                "srcModule": {
+                    "$id": "#root/header/srcModule",
+                    "title": "Srcmodule",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "4kviOL8"
+                    ],
+                    "pattern": "^.*$"
+                },
+                "evtId": {
+                    "$id": "#root/header/evtId",
+                    "title": "Evtid",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "yDG3UvktLKr56LaM6OMmsTKIK"
+                    ],
+                    "pattern": "^.*$"
+                },
+                "evtDate": {
+                    "$id": "#root/header/evtDate",
+                    "title": "Evtdate",
+                    "type": "integer",
+                    "examples": [
+                        0
+                    ],
+                    "default": 0
+                },
+                "sndDate": {
+                    "$id": "#root/header/sndDate",
+                    "title": "Snddate",
+                    "type": "integer",
+                    "examples": [
+                        0
+                    ],
+                    "default": 0
+                },
+                "parentId": {
+                    "$id": "#root/header/parentId",
+                    "title": "Parentid",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "s4FeAisP4exaw5z"
+                    ],
+                    "pattern": "^.*$"
+                },
+                "prevEvtId": {
+                    "$id": "#root/header/prevEvtId",
+                    "title": "Prevevtid",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "IUHWGa4FVb3o"
+                    ],
+                    "pattern": "^.*$"
+                }
+            }
+        }
+,
+        "body": {
+            "$id": "#root/body",
+            "title": "Body",
+            "type": "object",
+            "required": [
+                "report_dt",
+                "ucpid",
+                "scoreversion",
+                "score_attr"
+            ],
+            "properties": {
+                "report_dt": {
+                    "$id": "#root/body/report_dt",
+                    "title": "Report_dt",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "8509-95-06"
+                    ],
+                    "pattern": "^.*$"
+                },
+                "ucpid": {
+                    "$id": "#root/body/ucpid",
+                    "title": "Ucpid",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ],
+                    "pattern": "^.*$"
+                },
+                "scoreversion": {
+                    "$id": "#root/body/scoreversion",
+                    "title": "Scoreversion",
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        ""
+                    ],
+                    "pattern": "^.*$"
+                },
+                "score_attr": {
+                    "$id": "#root/body/score_attr",
+                    "title": "Score_attr",
+                    "type": "array",
+                    "default": [],
+                    "items":{
+                        "$id": "#root/body/score_attr/items",
+                        "title": "Items",
+                        "type": "object",
+                        "required": [
+                            "step",
+                            "scriptName",
+                            "userRole",
+                            "order",
+                            "lineId",
+                            "unqProductCode",
+                            "productId"
+                        ],
+                        "properties": {
+                            "step": {
+                                "$id": "#root/body/score_attr/items/step",
+                                "title": "Step",
+                                "type": "string",
+                                "default": "",
+                                "examples": [
+                                    "KDV"
+                                ],
+                                "pattern": "^.*$"
+                            },
+                            "scriptName": {
+                                "$id": "#root/body/score_attr/items/scriptName",
+                                "title": "Scriptname",
+                                "type": "string",
+                                "default": "",
+                                "examples": [
+                                    "pokupay"
+                                ],
+                                "pattern": "^.*$"
+                            },
+                            "attribText": {
+                                "$id": "#root/body/score_attr/items/attribText",
+                                "title": "Attribtext",
+                                "type": "string",
+                                "default": "",
+                                "examples": [
+                                    ""
+                                ],
+                                "pattern": "^.*$"
+                            },
+                            "userRole": {
+                                "$id": "#root/body/score_attr/items/userRole",
+                                "title": "Userrole",
+                                "type": "string",
+                                "default": "",
+                                "examples": [
+                                    "DSA"
+                                ],
+                                "pattern": "^.*$"
+                            },
+                            "order": {
+                                "$id": "#root/body/score_attr/items/order",
+                                "title": "Order",
+                                "type": "integer",
+                                "examples": [
+                                    1
+                                ],
+                                "default": 0
+                            },
+                            "lineId": {
+                                "$id": "#root/body/score_attr/items/lineId",
+                                "title": "Lineid",
+                                "type": "integer",
+                                "examples": [
+                                    1
+                                ],
+                                "default": 0
+                            },
+                            "unqProductCode": {
+                                "$id": "#root/body/score_attr/items/unqProductCode",
+                                "title": "Unqproductcode",
+                                "type": "string",
+                                "default": "",
+                                "examples": [
+                                    "HGGFbbbHGHD"
+                                ],
+                                "pattern": "^.*$"
+                            },
+                            "productId": {
+                                "$id": "#root/body/score_attr/items/productId",
+                                "title": "Productid",
+                                "type": "string",
+                                "default": "",
+                                "examples": [
+                                    "15ggfhhTTYY"
+                                ],
+                                "pattern": "^.*$"
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+}

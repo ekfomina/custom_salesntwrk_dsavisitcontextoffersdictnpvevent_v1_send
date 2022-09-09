@@ -1,0 +1,141 @@
+vars: &common_params
+  CTL_ENTITY_ID: 926013700
+  CTL_WF_NAME_BASE: "custom_salesntwrk_dsavisitcontextoffersdictnpvevent_v1_send"
+  MEMORY_EXECUTOR: "1g"
+  NUMBER_EXECUTOR: 3
+  CORES_EXECUTOR: 4
+  LOGSTASH_URL: "http://127.0.0.1:44441"
+  APP_ID: "uvddsanpvdict-svd-4fe5-96b5-870adafc80c9
+
+"
+  N_PARTITION: 12
+  INCREMENT_MODE: 0
+  POINT_DATE_MODE: 0
+  SYNTHETIC_MODE: 1
+  ARCHIVE_MODE: 0
+  PATH_TO_PROJ_HDFS: "/oozie-app/salesntwrk/COREDEV/custom_salesntwrk_dsavisitcontextoffersdictnpvevent_v1_send"
+  PATH_TO_WORKFLOW_HDFS: "{{PATH_TO_PROJ_HDFS}}/oozie/workflow.xml"
+  JSON_SCHEMA_FILE_NAME: "json_schema.json"
+  TOPIC_NAME: "PKAP.DSAVISITCONTEXTOFFERSDICTNPVEVENT.V1"
+  KAFKA_BATCH_SIZE: 100
+  KAFKA_BUFFER_MEMORY: 10000
+  KAFKA_LINGER_MS: 0 # default
+  KAFKA_COMPRESSION_TYPE: "none" # default
+  KAFKA_ACKS: "-1"
+  KAFKA_CLIENT_ID: "ftstream"
+  KAFKA_CLIENT_FILE_NAME: "kafka-clients-0.10.2.2.jar"
+  PATH_TO_LOG_IN_HDFS: "/tmp/custom_salesntwrk_dsavisitcontextoffersdictnpvevent_v1_send/log.log"
+  PATH_TO_PYTHON: "/opt/cloudera/parcels/PYENV.DML/bin/python3"
+  SPARK_MAJOR_VERSION: 2
+
+stands:
+  - stand_inventory: dev
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer.jks"  # не используется, но пустую строку передать нельзя
+      USER_NAME: "u_sna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "root.users.{{USER_NAME}}"
+      KAFKA_BOOTSTRAP_SERVERS: "10.53.211.249:9092,10.53.211.133:9092" # DEV SNA kafka
+      KAFKA_SECURITY_PROTOCOL: "PLAINTEXT"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.2.0.jar"
+      PROFILE_CTL_WF: "Default"
+      PROFILE_DEPENDS_ENTITY: "Default"
+      CATEGORY_CTL_WF: "salesntwrk/umiid/custom"
+      HADOOP_CONF_DIR: "/etc/hive/conf"
+
+
+  - stand_inventory: sdpdevsna
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}_sdp"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer.jks"
+      USER_NAME: "u_sklsdpsna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "default"
+      KAFKA_BOOTSTRAP_SERVERS: "10.53.211.249:9092,10.53.211.133:9092" # DEV SNA kafka
+      KAFKA_SECURITY_PROTOCOL: "PLAINTEXT"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.3.4.jar"
+      PROFILE_CTL_WF: "sdpdevsna"
+      PROFILE_DEPENDS_ENTITY: "sdpdevsna"
+      CATEGORY_CTL_WF: "salesntwrk/sdp/umiid/integrations"
+      HADOOP_CONF_DIR: "/etc/hadoop/conf"
+
+  - stand_inventory: ift
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer.jks"
+      USER_NAME: "u_itsna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "root.users.{{USER_NAME}}"
+      KAFKA_BOOTSTRAP_SERVERS: "10.56.119.229:9093,10.56.119.232:9093"
+      KAFKA_SECURITY_PROTOCOL: "SSL"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.2.0.jar"
+      PROFILE_CTL_WF: "Default"
+      PROFILE_DEPENDS_ENTITY: "Default"
+      CATEGORY_CTL_WF: "salesntwrk/umiid/custom"
+      HADOOP_CONF_DIR: "/etc/hive/conf"
+
+  - stand_inventory: sdpiftsna
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}_sdp"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer.jks"
+      USER_NAME: "u_itsklsdpsna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "default"
+      KAFKA_BOOTSTRAP_SERVERS: "10.56.119.229:9093,10.56.119.232:9093"
+      KAFKA_SECURITY_PROTOCOL: "SSL"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.3.4.jar"
+      PROFILE_CTL_WF: "sdpiftsna"
+      PROFILE_DEPENDS_ENTITY: "sdpiftsna"
+      CATEGORY_CTL_WF: "salesntwrk/sdp/umiid/integrations"
+      HADOOP_CONF_DIR: "/etc/hadoop/conf"
+
+  - stand_inventory: clatvmsna # psi
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer.jks"
+      USER_NAME: "u_atdisna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "root.default"
+      KAFKA_BOOTSTRAP_SERVERS: "10.107.8.207:9093,10.107.8.208:9093"
+      KAFKA_SECURITY_PROTOCOL: "SSL"
+      PROFILE_CTL_WF: "clatvmsna"
+      PROFILE_DEPENDS_ENTITY: "clatvmsna"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.3.4.jar"
+      CATEGORY_CTL_WF: "salesntwrk/umiid/custom"
+      HADOOP_CONF_DIR: "/etc/hive/conf"
+
+  - stand_inventory: clvmsna # prom
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer_prom.jks"
+      USER_NAME: "u_disna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "root.custom_dm.g_dc_y_salesntwrk"
+      KAFKA_BOOTSTRAP_SERVERS: "10.102.178.170:9093,10.102.178.171:9093,10.121.83.186:9093,10.121.83.202:9093"
+      KAFKA_SECURITY_PROTOCOL: "SSL"
+      PROFILE_CTL_WF: "clvmsna"
+      PROFILE_DEPENDS_ENTITY: "clvmsna"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.3.4.jar"
+      CATEGORY_CTL_WF: "salesntwrk/umiid/custom"
+      HADOOP_CONF_DIR: "/etc/hive/conf"
+      SYNTHETIC_MODE: 0
+      INCREMENT_MODE: 1
+
+  - stand_inventory: sklsdpsna # prom
+    vars:
+      <<: *common_params
+      CTL_WF_NAME: "{{CTL_WF_NAME_BASE}}_sdp"
+      KEYSTORE_JKS_FILE_NAME: "producer_consumer_prom.jks"
+      USER_NAME: "u_sklsdpsna_s_custom_salesntwrk_int_fasttrack"
+      YARN_QUEUE: "g_dc_y_salesntwrk_custom"
+      KAFKA_BOOTSTRAP_SERVERS: "10.102.178.170:9093,10.102.178.171:9093,10.121.83.186:9093,10.121.83.202:9093"
+      KAFKA_SECURITY_PROTOCOL: "SSL"
+      PROFILE_CTL_WF: "sklsdpsna"
+      PROFILE_DEPENDS_ENTITY: "sklsdpsna"
+      SPARK_SQL_KAFKA_FILE_NAME: "spark-sql-kafka-0-10_2.11-2.3.4.jar"
+      CATEGORY_CTL_WF: "salesntwrk/sdp/umiid/integrations"
+      HADOOP_CONF_DIR: "/etc/hadoop/conf"
+      SYNTHETIC_MODE: 0
+      INCREMENT_MODE: 1
+      PATH_TO_PYTHON: "/usr/parcels/PYENV.DML/bin/python3"

@@ -1,0 +1,71 @@
+{
+  "stand_name": "sdpsna",
+  "version": "1.0.0",
+  "build": "none",
+  "type": "oozie",
+  "configure_item": "CI02720477_AiPlatformUmiid",
+  "block": "salesntwrk",
+  "datamart_group": "COREDEV",
+  "datamart_name": "custom_salesntwrk_dsavisitcontextoffersdictnpvevent_v1_send",
+
+  "sq_pr_key": "dsavisitcontextoffersdictnpvevent_v1_send:dsavisitcontextoffersdictnpvevent_v1_send",
+  "sq_pr_name": "dsavisitcontextoffersdictnpvevent_v1_send",
+  "sq_scan_folder": "scripts/",
+  "sq_binary_folder": "",
+  "sast_conf": "devsecops-config.yml",
+  "emails": "aivsidorov@sberbank.ru",
+  "run_hive_script_sql" : true,
+  "sbt": {
+    "build_sbt_dir": "",
+    "build_command": "",
+    "repos_file": "",
+    "options_sbt": ""
+  },
+  "maven": {
+    "pom_path": "",
+    "set_path": "",
+    "options_mvn": ""
+  },
+  "distrib_files": [
+    {
+      "source": "ctl/ctl.yml",
+      "destination": "ctl/"
+    },
+    {
+      "source": "s2t/s2t.xlsx",
+      "destination": "s2t/"
+    },
+    {
+      "source": "sql/*",
+      "destination": "sql/"
+    },
+    {
+      "source": "oozie/*",
+      "destination": "hdfs/oozie/"
+    },
+    {
+      "source": "scripts/*",
+      "destination": "hdfs/scripts/"
+    },
+    {
+      "source": "keystore_jks/*",
+      "destination": "hdfs/keystore_jks/"
+    },
+    {
+      "source": "json_schema.json",
+      "destination": "hdfs/"
+    },
+    {
+      "source": "spark_sql_kafka/*",
+      "destination": "hdfs/spark_sql_kafka/"
+    },
+    {
+      "source": "coverage-reports/*",
+      "destination": "hdfs/coverage-reports/"
+    },
+    {
+      "source": "logger.yaml",
+      "destination": "hdfs/"
+    }
+  ]
+}
